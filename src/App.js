@@ -11,7 +11,6 @@ function App() {
   // タスクを追加する関数
   const handleAddTodo = () => {
     console.log(todoNameRef);
-    const task = todoNameRef.current.value;
     setTodos((beforeTasks) => {
       return [...beforeTasks, { key: uuidv4(), task: task, completed: false }];
       // ここの中にID:〇〇を記載する？？
