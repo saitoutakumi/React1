@@ -6,10 +6,10 @@ import { v4 as uuidv4 } from "uuid";
 function App() {
   const [todos, setTodos] = useState([]);
   const todoNameRef = useRef();
-  let num = 0;
 
   // タスクを追加する関数
   const handleAddTodo = () => {
+    const task = todoNameRef.current.value;
     console.log(todoNameRef);
     setTodos((beforeTasks) => {
       return [...beforeTasks, { key: uuidv4(), task: task, completed: false }];
