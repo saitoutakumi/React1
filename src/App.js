@@ -17,7 +17,7 @@ function App() {
       // ここの中にID:〇〇を記載する？？
     });
     todoNameRef.current.value = null;
-    // タスクを追加したらテキストボックスを空白にする？
+    // タスクを追加したらテキストボックスを空白にする？?
   };
 
   return (
