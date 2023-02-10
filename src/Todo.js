@@ -13,11 +13,13 @@ export const Todo = ({ todo }) => {
 
   return (
     <div>
-      {/* {todo.ID} */}
+      {todo.key}
       {/* ここにIDを記載する */}
       {todo.task}
       <label>
         <button onClick={taskWork}>作業中</button>
+      </label>
+      <label>
         <button onClick={taskFinish}> 完了</button>
       </label>
     </div>
