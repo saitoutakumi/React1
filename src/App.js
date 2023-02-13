@@ -1,17 +1,20 @@
 import { useState, useRef } from "react";
 import "./App.css";
-import TodoList from "./TodoList";
+// import TodoList from "./TodoList";
 import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const todoNameRef = useRef();
 
+  const h1 = "Todoリスト";
+
   // タスクを追加する関数
   const handleAddTodo = () => {
     const task = todoNameRef.current.value;
-    console.log(todoNameRef);
+    console.log(todoNameRef.current.value);
     setTodos((beforeTasks) => {
+      console.log(task);
       return [...beforeTasks, { key: uuidv4(), task: task, completed: false }];
       // ここの中にID:〇〇を記載する？？
     });
@@ -21,7 +24,7 @@ function App() {
 
   return (
     <div>
-      <h1>Todoリスト</h1>
+      <h1>{h1}</h1>
       <label>
         <input type="radio" />
         すべて
@@ -34,7 +37,8 @@ function App() {
         <input type="radio" />
         完了
       </label>
-      <TodoList todos={todos} />
+      <div>{setTodos()}</div>
+      {/* <TodoList todos={todos} /> */}
       <h2>新規タスクの追加</h2>
       <input type="text" ref={todoNameRef}></input>
       <button onClick={handleAddTodo}>追加</button>
