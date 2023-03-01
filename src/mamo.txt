@@ -16,6 +16,8 @@ const App = () => {
   //todoTextに初期値(今回の場合空欄という初期値)が設定されていても入力できるようにする。
   // 形で覚えた方が良さそう
 
+ 
+
   //タスクを追加する関数
   const onClickAdd = () => {
     if (todoText === "") return;
@@ -27,15 +29,12 @@ const App = () => {
 
   // 削除ボタン;
   const clickDeleteButton = (index) => {
-    const newTodos = () => {
-      todoList.splice(index, 1);
-      console.log("index", index);
-      console.log("todoList", todoList);
-      return todoList;
-    };
-    setTodoList(newTodos());
+    const newTodos = [...todoList];
+    newTodos.splice(index, 1);
+    console.log("index", index);
+    console.log("todoList", todoList);
+    console.log("newTodos", newTodos);
   };
-
   // 作業中ボタン
   // const [completeTodos, setCompleteTodos] = useState([]);
   // const clickStatusButton = (todo, index) => {
