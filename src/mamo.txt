@@ -16,8 +16,6 @@ const App = () => {
   //todoTextに初期値(今回の場合空欄という初期値)が設定されていても入力できるようにする。
   // 形で覚えた方が良さそう
 
- 
-
   //タスクを追加する関数
   const onClickAdd = () => {
     if (todoText === "") return;
@@ -29,12 +27,15 @@ const App = () => {
 
   // 削除ボタン;
   const clickDeleteButton = (index) => {
-    const newTodos = [...todoList];
-    newTodos.splice(index, 1);
-    console.log("index", index);
-    console.log("todoList", todoList);
-    console.log("newTodos", newTodos);
+    const newTodos = () => {
+      todoList.splice(index, 1);
+      console.log("index", index);
+      console.log("todoList", todoList);
+      return todoList;
+    };
+    setTodoList(newTodos());
   };
+
   // 作業中ボタン
   // const [completeTodos, setCompleteTodos] = useState([]);
   // const clickStatusButton = (todo, index) => {
@@ -96,3 +97,190 @@ const App = () => {
 };
 
 export default App;
+
+
+
+
+----------------------
+// import React from "react";
+// import { click } from "@testing-library/user-event/dist/click";
+import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+const App = () => {
+  const [todoText, setTodoText] = useState("");
+  // 変数todoと変数todoを変更する関数setTodo（）→setTodoText(todoTextをどうするか)
+  // 入力された値
+
+  const [todoList, setTodoList] = useState([]);
+  // 変数addTodoと変数addTodoを変更する関数setAddTodo（）→setAddTodoList(addTodoListをどうするか)
+  // 表示される値
+
+  const handleChange = (e) => setTodoText(e.target.value);
+  //todoTextに初期値(今回の場合空欄という初期値)が設定されていても入力できるようにする。
+  // 形で覚えた方が良さそう
+
+  const showTodos = todoList.map((todo, index) => (
+    <tr key={todo.id}>
+      <td>{`${index + 1}`}</td>
+      <td>{`${todo.comment}`}</td>
+      <td>
+        <button
+          onClick={() => clickStatusButton(todo, index)}
+        >{`${todo.status}`}</button>
+      </td>
+      <td>
+        <button onClick={() => clickDeleteButton(index)}>削除</button>
+      </td>
+    </tr>
+  ));
+
+  //タスクを追加する関数
+  const onClickAdd = () => {
+    if (todoText === "") return;
+    setTodoList([
+      ...todoList,
+      { id: uuidv4(), comment: todoText, status: "作業中" },
+    ]);
+    // addTodoListをどうする？→入力されたタスク（オブジェクト）を追加する。todoTextは入力された内容
+    setTodoText("");
+    // todoTextを白紙にする→setTodoText(TodoTextをどうするか)
+  };
+
+  // 削除ボタン;
+  const clickDeleteButton = (index) => {
+    setTodoList(...todoList.splice(index, 1));
+    console.log("index", index);
+    console.log("todoList", todoList);
+  };
+
+  // 作業中ボタン;
+  const clickStatusButton = (todo, index) => {
+    if (todo.status === "作業中") {
+      setTodoList((todo.status = "完了"));
+    }
+    console.log("todoList", todoList);
+    console.log(index, todo);
+  };
+
+  return (
+    <div>
+      <h1>TodoList</h1>
+      <input type="radio" />
+      すべて
+      <input type="radio" />
+      作業中
+      <input type="radio" />
+      完了
+      <table>
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>コメント</td>
+            <td>状態</td>
+          </tr>
+        </thead>
+        <tbody>{showTodos}</tbody>
+      </table>
+      <h2>新規タスクの追加</h2>
+      <input type="text" value={todoText} onChange={handleChange} />
+      <button onClick={() => onClickAdd()}>追加</button>
+    </div>
+  );
+};
+
+export default App;
+
+
+----------------------[
+// import React from "react";
+// import { click } from "@testing-library/user-event/dist/click";
+import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
+const App = () => {
+  const [todoText, setTodoText] = useState("");
+  // 変数todoと変数todoを変更する関数setTodo（）→setTodoText(todoTextをどうするか)
+  // 入力された値
+
+  const [todoList, setTodoList] = useState([]);
+  // 変数addTodoと変数addTodoを変更する関数setAddTodo（）→setAddTodoList(addTodoListをどうするか)
+  // 表示される値
+
+  const handleChange = (e) => setTodoText(e.target.value);
+  //todoTextに初期値(今回の場合空欄という初期値)が設定されていても入力できるようにする。
+  // 形で覚えた方が良さそう
+
+  const showTodos = () =>
+    Object.value(todoList).map((todo, index) => {
+      <tr key={todo.id}>
+        <td>{`${index + 1}`}</td>
+        <td>{`${todo.comment}`}</td>
+        <td>
+          <button
+            onClick={() => clickStatusButton(todo, index)}
+          >{`${todo.status}`}</button>
+        </td>
+        <td>
+          <button onClick={() => clickDeleteButton(todo, index)}>削除</button>
+        </td>
+      </tr>;
+    });
+
+  //タスクを追加する関数
+  const onClickAdd = () => {
+    if (todoText === "") return;
+    setTodoList([
+      ...todoList,
+      { id: uuidv4(), comment: todoText, status: "作業中" },
+    ]);
+    // addTodoListをどうする？→入力されたタスク（オブジェクト）を追加する。todoTextは入力された内容
+    setTodoText("");
+    // todoTextを白紙にする→setTodoText(TodoTextをどうするか)
+  };
+
+  // 削除ボタン;
+  const clickDeleteButton = (todo, index) => {
+    console.log(typeof todoList);
+    console.log("index", index);
+    console.log("todoList", todoList);
+  };
+
+  // 作業中ボタン;
+  const clickStatusButton = (todo, index) => {
+    if (todo.status === "作業中") {
+      setTodoList((todo.status = "完了"));
+    }
+    console.log("todoList", todoList);
+    console.log(index, todo);
+  };
+
+  return (
+    <div>
+      <h1>TodoList</h1>
+      <input type="radio" />
+      すべて
+      <input type="radio" />
+      作業中
+      <input type="radio" />
+      完了
+      <table>
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>コメント</td>
+            <td>状態</td>
+          </tr>
+        </thead>
+        <tbody>{() => showTodos()}</tbody>
+      </table>
+      <h2>新規タスクの追加</h2>
+      <input type="text" value={todoText} onChange={handleChange} />
+      <button onClick={() => onClickAdd()}>追加</button>
+    </div>
+  );
+};
+
+export default App;
+
+

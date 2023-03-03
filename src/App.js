@@ -19,35 +19,29 @@ const App = () => {
   //タスクを追加する関数
   const onClickAdd = () => {
     if (todoText === "") return;
-    setTodoList([...todoList, { comment: todoText, status: "作業中" }]);
+    const newTodos = [...todoList, { comment: todoText, status: "作業中" }];
+    setTodoList(newTodos);
     // addTodoListをどうする？→入力されたタスク（オブジェクト）を追加する。todoTextは入力された内容
     setTodoText("");
     // todoTextを白紙にする→setTodoText(TodoTextをどうするか)
   };
 
-  // 削除ボタン;
+  // 削除ボタン
   const clickDeleteButton = (index) => {
-    const newTodos = () => {
-      todoList.splice(index, 1);
-      console.log("index", index);
-      console.log("todoList", todoList);
-      return todoList;
-    };
-    setTodoList(newTodos());
+    const newTodo = [...todoList];
+    newTodo.splice(index, 1);
+    setTodoList(newTodo);
+    console.log("todoList", todoList);
   };
 
   // 作業中ボタン
-  // const [completeTodos, setCompleteTodos] = useState([]);
-  // const clickStatusButton = (todo, index) => {
-  //   if (todo.status === "作業中") {
-  //     setCompleteTodos(() => {
-  //       todo.status = "完了";
-  //     });
-  //   }
-  //   console.log("todoList", todoList);
-  //   console.log("completeTodos", completeTodos);
-  //   console.log(index, todo);
-  // };
+  const clickStatusButton = (todo, index) => {
+    if (todo.status === "作業中") {
+      const newTodos = [...todoList];
+      todo.status = "完了";
+      setTodoList(newTodos);
+    }
+  };
 
   return (
     <div>
@@ -74,9 +68,9 @@ const App = () => {
               <td>{`${index + 1}`}</td>
               <td>{`${todo.comment}`}</td>
               <td>
-                {/* <button
+                <button
                   onClick={() => clickStatusButton(todo, index)}
-                >{`${todo.status}`}</button> */}
+                >{`${todo.status}`}</button>
               </td>
               <td>
                 <button onClick={() => clickDeleteButton(index)}>
