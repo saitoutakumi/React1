@@ -28,10 +28,11 @@ const App = () => {
 
   // 削除ボタン
   const clickDeleteButton = (index) => {
-    const newTodo = [...todoList];
-    newTodo.splice(index, 1);
-    setTodoList(newTodo);
+    const newTodos = [...todoList];
+    newTodos.splice(index, 1);
+    setTodoList(newTodos);
     console.log("todoList", todoList);
+    console.log("newTodos", newTodos);
   };
 
   // 作業中ボタン
@@ -40,6 +41,13 @@ const App = () => {
       const newTodos = [...todoList];
       todo.status = "完了";
       setTodoList(newTodos);
+      console.log("todoList", todoList);
+      console.log("newTodos", newTodos);
+    } else if (todo.status === "完了") {
+      const newTodos = [...todoList];
+      todo.status = "作業中";
+      setTodoList(newTodos);
+      console.log("todoList", todoList);
     }
   };
 
