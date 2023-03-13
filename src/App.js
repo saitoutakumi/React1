@@ -1,32 +1,38 @@
-// import React from "react";
-// import { click } from "@testing-library/user-event/dist/click";
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import TodoList from "./TodoList";
+import DeleteButton from "./DeleteButton";
 
 const App = () => {
   const [todoText, setTodoText] = useState("");
-  // 変数todoと変数todoを変更する関数setTodo（）→setTodoText(todoTextをどうするか)
-  // 入力された値
-
   const [todoList, setTodoList] = useState([]);
-  // 変数addTodoと変数addTodoを変更する関数setAddTodo（）→setAddTodoList(addTodoListをどうするか)
-  // 表示される値
-
   const handleChange = (e) => setTodoText(e.target.value);
-  //todoTextに初期値(今回の場合空欄という初期値)が設定されていても入力できるようにする。
-  // 形で覚えた方が良さそう
 
-  //タスクを追加する関数
+  // //タスクを追加する関数
   const onClickAdd = () => {
     if (todoText === "") return;
     const newTodos = [...todoList, { comment: todoText, status: "作業中" }];
     setTodoList(newTodos);
-    // addTodoListをどうする？→入力されたタスク（オブジェクト）を追加する。todoTextは入力された内容
     setTodoText("");
-    // todoTextを白紙にする→setTodoText(TodoTextをどうするか)
   };
 
-  // 削除ボタン
+  // const TodoList = (props) => {
+  //   todoList.map((todo, index) => (
+  //     <tr key={uuidv4}>
+  //       <td>{`${index + 1}`}</td>
+  //       <td>{`${todo.comment}`}</td>
+  //       <td>
+  //         <button
+  //           onClick={() => clickStatusButton(todo, index)}
+  //         >{`${todo.status}`}</button>
+  //       </td>
+  //       <td>
+  //         <button onClick={() => clickDeleteButton(index)}>削除</button>
+  //       </td>
+  //     </tr>
+  //   ));
+  // };
+
+  // // 削除ボタン
   const clickDeleteButton = (index) => {
     const newTodos = [...todoList];
     newTodos.splice(index, 1);
@@ -35,7 +41,7 @@ const App = () => {
     console.log("newTodos", newTodos);
   };
 
-  // 作業中ボタン
+  // // 作業中ボタン
   const clickStatusButton = (todo, index) => {
     if (todo.status === "作業中") {
       const newTodos = [...todoList];
@@ -60,37 +66,7 @@ const App = () => {
       作業中
       <input type="radio" />
       完了
-      <table>
-        <thead>
-          <tr>
-            <td>ID</td>
-            <td>コメント</td>
-            <td>状態</td>
-          </tr>
-        </thead>
-        <tbody>
-          {todoList.map((todo, index) => (
-            // ここの記述Qiita参照したもっと深掘り理解したい
-            // ？allTodo.map..じゃだめ？
-            <tr key={uuidv4()}>
-              <td>{`${index + 1}`}</td>
-              <td>{`${todo.comment}`}</td>
-              <td>
-                <button
-                  onClick={() => clickStatusButton(todo, index)}
-                >{`${todo.status}`}</button>
-              </td>
-              <td>
-                <button onClick={() => clickDeleteButton(index)}>
-                  {/* addTodoListのtodoとindexを渡している */}
-                  {/* イベントハンドラで引数がある場合()=>関数(引数)の記載が必要 */}
-                  削除
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <TodoList todoList={todoList} />
       <h2>新規タスクの追加</h2>
       <input type="text" value={todoText} onChange={handleChange} />
       <button onClick={() => onClickAdd()}>追加</button>

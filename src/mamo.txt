@@ -16,47 +16,70 @@ const App = () => {
   //todoTextに初期値(今回の場合空欄という初期値)が設定されていても入力できるようにする。
   // 形で覚えた方が良さそう
 
+  const [checkedRadio, setCheckedRadio] = useState("すべて");
+
+  const radioChange = (e) => {
+    setCheckedRadio(e.target.value);
+  };
+
   //タスクを追加する関数
   const onClickAdd = () => {
     if (todoText === "") return;
-    setTodoList([...todoList, { comment: todoText, status: "作業中" }]);
+    const newTodos = [...todoList, { comment: todoText, status: "作業中" }];
+    setTodoList(newTodos);
     // addTodoListをどうする？→入力されたタスク（オブジェクト）を追加する。todoTextは入力された内容
     setTodoText("");
     // todoTextを白紙にする→setTodoText(TodoTextをどうするか)
   };
 
-  // 削除ボタン;
+  // 削除ボタン
   const clickDeleteButton = (index) => {
-    const newTodos = () => {
-      todoList.splice(index, 1);
-      console.log("index", index);
-      console.log("todoList", todoList);
-      return todoList;
-    };
-    setTodoList(newTodos());
+    const newTodos = [...todoList];
+    newTodos.splice(index, 1);
+    setTodoList(newTodos);
+    console.log("todoList", todoList);
+    console.log("newTodos", newTodos);
   };
 
   // 作業中ボタン
-  // const [completeTodos, setCompleteTodos] = useState([]);
-  // const clickStatusButton = (todo, index) => {
-  //   if (todo.status === "作業中") {
-  //     setCompleteTodos(() => {
-  //       todo.status = "完了";
-  //     });
-  //   }
-  //   console.log("todoList", todoList);
-  //   console.log("completeTodos", completeTodos);
-  //   console.log(index, todo);
-  // };
+  const clickStatusButton = (todo, index) => {
+    if (todo.status === "作業中") {
+      const newTodos = [...todoList];
+      todo.status = "完了";
+      setTodoList(newTodos);
+      console.log("todoList", todoList);
+      console.log("newTodos", newTodos);
+    } else if (todo.status === "完了") {
+      const newTodos = [...todoList];
+      todo.status = "作業中";
+      setTodoList(newTodos);
+      console.log("todoList", todoList);
+    }
+  };
 
   return (
     <div>
       <h1>TodoList</h1>
-      <input type="radio" />
+      <input
+        type="radio"
+        value="すべて"
+        onChange={radioChange}
+        checked={checkedRadio === "すべて"}
+      />
       すべて
-      <input type="radio" />
+      <input
+        type="radio"
+        value="作業中"
+        onChange={radioChange}
+        checked={checkedRadio === "作業中"}
+      />
       作業中
-      <input type="radio" />
+      <input
+        type="radio"
+        value="完了"
+        onChange={radioChange}
+        checked={checkedRadio === "完了"}
+      />
       完了
       <table>
         <thead>
@@ -74,9 +97,9 @@ const App = () => {
               <td>{`${index + 1}`}</td>
               <td>{`${todo.comment}`}</td>
               <td>
-                {/* <button
+                <button
                   onClick={() => clickStatusButton(todo, index)}
-                >{`${todo.status}`}</button> */}
+                >{`${todo.status}`}</button>
               </td>
               <td>
                 <button onClick={() => clickDeleteButton(index)}>
@@ -97,6 +120,7 @@ const App = () => {
 };
 
 export default App;
+
 
 
 
