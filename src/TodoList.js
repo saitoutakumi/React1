@@ -1,9 +1,20 @@
 import React from "react";
-import StatusButton from "./StatusButton";
-import DeleteButton from "./DeleteButton";
 import { v4 as uuidv4 } from "uuid";
+// import StatusButton from "./StatusButton";
+// import DeleteButton from "./DeleteButton";
 
-const TodoList = ({ todoList }) => {
+const TodoList = ({ todoList, setTodoList }) => {
+  // const [todoList, setTodoList] = useState([]);
+
+  // // 削除ボタン
+  const clickDeleteButton = (index) => {
+    const newTodos = [...todoList];
+    newTodos.splice(index, 1);
+    // setTodoList(newTodos);
+    console.log("todoList", todoList);
+    console.log("newTodos", newTodos);
+  };
+
   return (
     <div>
       <table>
@@ -20,12 +31,12 @@ const TodoList = ({ todoList }) => {
               <td>{`${index + 1}`}</td>
               <td>{`${todo.comment}`}</td>
               <td>
-                <StatusButton todo={todo} />
-                {/* StatusButtonコンポーネントにtodoList内のtodoを「todo」として渡している？？ */}
+                <button>{`${todo.status}`}</button>
               </td>
               <td>
-                <DeleteButton todoList={todoList} />
-                {/* DeleteButtonコンポーネントに配列todoListを「todoList」として渡している？？ */}
+                <button onClick={() => clickDeleteButton(console.log(index))}>
+                  削除
+                </button>
               </td>
             </tr>
           ))}
