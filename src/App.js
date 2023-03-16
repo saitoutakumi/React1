@@ -4,7 +4,6 @@ import TodoList from "./TodoList";
 const App = () => {
   const [todoText, setTodoText] = useState("");
   const [todoList, setTodoList] = useState([]);
-
   return (
     <div>
       <h1>TodoList</h1>
