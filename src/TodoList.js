@@ -1,39 +1,14 @@
 import React from "react";
 import { v4 as uuidv4 } from "uuid";
-// import StatusButton from "./StatusButton";
-// import DeleteButton from "./DeleteButton";
+import StatusButton from "./StatusButton";
+import DeleteButton from "./DeleteButton";
+import AddTodoList from "./AddTodoList";
 
-const TodoList = ({ todoList, setTodoList }) => {
+const TodoList = ({ todoList, setTodoList, todoText, setTodoText }) => {
   // const [todoList, setTodoList] = useState([]);
   // ↑書くとエラーになる。App.jsで定義されているため。
   // propsでsetTodoListが渡ってきているため、上記を定義しなくてもOK
-
-  // 削除ボタン
-  const clickDeleteButton = (index) => {
-    const newTodos = [...todoList];
-    newTodos.splice(index, 1);
-    setTodoList(newTodos);
-    //子コンポーネントから親コンポーネントにある値に変更を加えたい時はsetStateをpropsで渡す
-    console.log("todoList", todoList);
-    console.log("newTodos", newTodos);
-    console.log("index", index);
-  };
-
-  //作業中ボタン
-  const clickStatusButton = (todo) => {
-    if (todo.status === "作業中") {
-      const newTodos = [...todoList];
-      todo.status = "完了";
-      setTodoList(newTodos);
-      console.log("todoList", todoList);
-      console.log("newTodos", newTodos);
-    } else if (todo.status === "完了") {
-      const newTodos = [...todoList];
-      todo.status = "作業中";
-      setTodoList(newTodos);
-      console.log("todoList", todoList);
-    }
-  };
+  //子コンポーネントから親コンポーネントにある値に変更を加えたい時はsetStateをpropsで渡す
 
   return (
     <div>
@@ -51,17 +26,31 @@ const TodoList = ({ todoList, setTodoList }) => {
               <td>{`${index + 1}`}</td>
               <td>{`${todo.comment}`}</td>
               <td>
-                <button
-                  onClick={() => clickStatusButton(todo)}
-                >{`${todo.status}`}</button>
+                <StatusButton
+                  setTodoList={setTodoList}
+                  todoList={todoList}
+                  todo={todo}
+                />
+                {/* todoList渡すだけではダメなのか？ */}
               </td>
               <td>
-                <button onClick={() => clickDeleteButton(index)}>削除</button>
+                <DeleteButton
+                  setTodoList={setTodoList}
+                  todoList={todoList}
+                  index={index}
+                />
+                {/* todoList渡すだけではダメなのか？indexも渡す必要があるのか */}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <AddTodoList
+        todoList={todoList}
+        setTodoList={setTodoList}
+        todoText={todoText}
+        setTodoText={setTodoText}
+      />
     </div>
   );
 };
