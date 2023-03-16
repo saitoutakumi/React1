@@ -15,31 +15,6 @@ const App = () => {
     setTodoText("");
   };
 
-  // // // 削除ボタン
-  // const clickDeleteButton = (index) => {
-  //   const newTodos = [...todoList];
-  //   newTodos.splice(index, 1);
-  //   setTodoList(newTodos);
-  //   console.log("todoList", todoList);
-  //   console.log("newTodos", newTodos);
-  // };
-
-  // // // 作業中ボタン
-  // const clickStatusButton = (todo, index) => {
-  //   if (todo.status === "作業中") {
-  //     const newTodos = [...todoList];
-  //     todo.status = "完了";
-  //     setTodoList(newTodos);
-  //     console.log("todoList", todoList);
-  //     console.log("newTodos", newTodos);
-  //   } else if (todo.status === "完了") {
-  //     const newTodos = [...todoList];
-  //     todo.status = "作業中";
-  //     setTodoList(newTodos);
-  //     console.log("todoList", todoList);
-  //   }
-  // };
-
   return (
     <div>
       <h1>TodoList</h1>
@@ -50,6 +25,8 @@ const App = () => {
       <input type="radio" />
       完了
       <TodoList todoList={todoList} setTodoList={setTodoList} />
+      {/* ↑↑TodoList.js内に記載された内容がここに戻ってきて表示される */}
+      {/* 子コンポーネントから親コンポーネントにある値に変更を加えたい時はsetStateをpropsで渡す */}
       <h2>新規タスクの追加</h2>
       <input type="text" value={todoText} onChange={handleChange} />
       <button onClick={() => onClickAdd()}>追加</button>
